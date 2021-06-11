@@ -92,10 +92,7 @@ export default new Vuex.Store({
   },
   mutations: {
 
-  trackQty(state,event,index) {
-
-    state.numItems[index].amount = event.target.value
-   },
+ 
 
     updateProduct(state,index){
 
@@ -119,7 +116,7 @@ export default new Vuex.Store({
  
        else{
          
-         let newObject = {
+         let newObject= {
             
            item: state.merch[0].variants[state.merch[0].selectedVariant].item,
  
@@ -141,19 +138,19 @@ export default new Vuex.Store({
  
            objExists: false
          }
-    }
+    
 
     if(state.numItems.length != 0){
 
       state.numItems.forEach(one =>{
         
-        if(one.color === state.merch[0].variants[stare.merch[0].selectedVariant].variantColorCode && one.sizeSelected === state.merch[0].variants[state.merch[0].selectedVariant].selectedSize){
+        if(one.color === state.merch[0].variants[state.merch[0].selectedVariant].variantColorCode && one.sizeSelected === state.merch[0].variants[state.merch[0].selectedVariant].selectedSize){
 
         
 
-           one.amount = one.amount + this.newObject.amount
+           one.amount = one.amount + newObject.amount
 
-            this.newObject.objExists = true
+            newObject.objExists = true
 
            //  using the which msg property to determing the color of the background and the msg that will be used with the class error to show a msg alert. in this case, im changing the value of 'which msg ' to 1 to later say, if whichMsg is equal to 1 then the background color will be such.
 
@@ -174,9 +171,9 @@ export default new Vuex.Store({
         
       })}
 
-      if(this.newObject.objExists === false || state.numItems.length === 0){
+      if(newObject.objExists === false || state.numItems.length === 0){
 
-        state.numItems.push(this.newObject)
+        state.numItems.push(newObject)
    
                state.whichMsg = 2
    
@@ -191,11 +188,18 @@ export default new Vuex.Store({
           }    
 
 
-
+        }
 
 
   },
 
+  // the state will always be the first parameter,  in order to recieve the state and multiple parameters, the parameters you are bringing from the commit, will have to be inside an object.
+  trackQty(state,{event,index}) {
+
+     // this line updates the value of the property 'amount' of the objects pushed to the 'numItems' array so that the discounted price could show from the cart when the quantity input value is changed.
+
+    state.numItems[index].amount = event.target.value
+   },
   showCart(state){
     state.modal = !state.modal
   },

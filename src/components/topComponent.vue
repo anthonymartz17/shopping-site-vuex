@@ -141,6 +141,8 @@ export default {
 
      this.$store.commit('addToCart',this.$refs.Qty[0].value)
 
+     
+
     //  this.merch[0].variants[this.merch[0].selectedVariant].howMany = this.$refs.Qty[0].value
      
     //  this.$emit('addToCartEvent',this.merch[0].variants[this.merch[0].selectedVariant])

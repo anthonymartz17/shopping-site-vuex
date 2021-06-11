@@ -209,9 +209,11 @@ export default {
 
     trackQty(event,index){
   
-      this.$store.commit('trackQty',event,index)
-    // this line updates the value of the property 'amount' of the objects pushed to the 'numItems' array so that the discounted price could show from the cart when the quantity input value is changed.
-    // this.numItems[index].amount = event.target.value
+  // in order to send multiple paratmeters in the commit, you need to put them inside an object.
+      this.$store.commit('trackQty',{event,index})
+
+   
+    
       
       
     },
