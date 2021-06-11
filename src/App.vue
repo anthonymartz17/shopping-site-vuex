@@ -65,7 +65,7 @@
           <!-- to be able to access the current target and current iteration, I sent both as arguments of the function i want to excute -->
 
           <!-- the function 'trackQty()' keeps track of the value of this input element. this is to know whether 3 or more items are being added so the discount could be activated. -->
-         <input @click="trackQty($event,index)" type="number" :value="item.amount" min="1" :max="merch[0].variants[merch[0].selectedVariant].inventory">
+         <input @click="trackQty($event,index)" type="number" :value="item.amount" min="1" :max="$store.state.merch[0].variants[$store.state.merch[0].selectedVariant].inventory">
          
 
          </div>
@@ -92,7 +92,7 @@
     @addToCartEvent='addItemsCart($event)' 
    
  
-    :merch='merch'
+  
      
      ></top-com>
       
@@ -206,10 +206,12 @@ export default {
 // through the use of $event you can access a lot of usefull information like path, target, etc...
 
   methods:{
+
     trackQty(event,index){
   
+      this.$store.commit('trackQty',event,index)
     // this line updates the value of the property 'amount' of the objects pushed to the 'numItems' array so that the discounted price could show from the cart when the quantity input value is changed.
-    this.numItems[index].amount = event.target.value
+    // this.numItems[index].amount = event.target.value
       
       
     },
@@ -316,14 +318,14 @@ export default {
 
   
 
-//     showCart(){
+    showCart(){
 
-//       $store.commit('showCart')
+      this.$store.commit('showCart')
 
      
     
       
-//     },
+    },
 
 //     delItemFromCart(index){
 
@@ -335,10 +337,10 @@ export default {
     computed:{
 // this computed property 'backgroundForMsg, helps me determine the color of the background for my style binding. in this case, if I want the background of the msg that drops down orange, i have to make whichMsg equals 1. on the other hand, if I want the background to be green then the property whichMsg has to be equal to 2'
     backgroundForMsg(){
-      if(this.whichMsg === 1){
+      if(this.$store.state.whichMsg === 1){
         return 'orange'
       }
-      if(this.whichMsg === 2){
+      if(this.$store.state.whichMsg === 2){
         return 'green'
       }
     },
@@ -355,10 +357,10 @@ export default {
     
 
     itemPrice(){
-       return this.merch[0].variants[this.merch[0].selectedVariant].variantPrice
+       return this.$store.state.merch[0].variants[this.$store.state.merch[0].selectedVariant].variantPrice
     },
     itemDiscount(){
-      return this.merch[0].variants[this.merch[0].selectedVariant].discount
+      return this.$store.state.merch[0].variants[this.$store.state.merch[0].selectedVariant].discount
     }
   },
 }

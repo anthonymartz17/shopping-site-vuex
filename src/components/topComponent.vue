@@ -39,7 +39,7 @@
          <div>
            
           <label >Quantity:</label>
-         <input ref="Qty" type="number" value="1" min="1" :max="$store.state.merch[0].variants[merch[0].selectedVariant].inventory">
+         <input ref="Qty" type="number" value="1" min="1" :max="$store.state.merch[0].variants[$store.state.merch[0].selectedVariant].inventory">
          </div>
           <div class="variant-container">
          
@@ -93,14 +93,14 @@ export default {
  computed:{
    
    image(){
-       return this.$store.state.merch[0].variants[this.merch[0].selectedVariant].variantImg
+       return this.$store.state.merch[0].variants[this.$store.state.merch[0].selectedVariant].variantImg
      
    },
    material(){
-     return this.$store.state.merch[0].variants[this.merch[0].selectedVariant].variantMaterial
+     return this.$store.state.merch[0].variants[this.$store.state.merch[0].selectedVariant].variantMaterial
    },
    availableItems(){
-     return this.$store.state.merch[0].variants[this.merch[0].selectedVariant].inventory
+     return this.$store.state.merch[0].variants[this.$store.state.merch[0].selectedVariant].inventory
    },   
 
   // here i created my computed property 'sizeChoice' that will be the value of the v-model assign to the select tag for the selection of the sizes of the t-shirts. 
@@ -110,19 +110,19 @@ export default {
    sizeChoice: {
 
      get(){
-       return this.$store.state.merch[0].variants[this.merch[0].selectedVariant].selectedSize
+       return this.$store.state.merch[0].variants[this.$store.state.merch[0].selectedVariant].selectedSize
      },
 
      set(value){
 
-     this.$store.state.merch[0].variants[this.merch[0].selectedVariant].selectedSize = value
+     this.$store.state.merch[0].variants[this.$store.state.merch[0].selectedVariant].selectedSize = value
      }
    },   
 
   //  i created the computed property (selectSize) to find the array (sizes) which is inside the (variant array) which in time is inside the (merch array). by using a computed property in this case, allows me to just loop through(selectSize) since the array is now in this property.  
 
    selectSize(){
-     return this.$store.state.merch[0].variants[this.merch[0].selectedVariant].sizes
+     return this.$store.state.merch[0].variants[this.$store.state.merch[0].selectedVariant].sizes
    },   
 
  },
@@ -131,7 +131,7 @@ export default {
    
   updateProduct(index){
     
-    $store.commit('updateProduct',index)
+    this.$store.commit('updateProduct',index)
     
     
 
@@ -139,7 +139,7 @@ export default {
  
    addToCart(){
 
-     $store.commit('addToCart',this.$refs.Qty[0].value)
+     this.$store.commit('addToCart',this.$refs.Qty[0].value)
 
     //  this.merch[0].variants[this.merch[0].selectedVariant].howMany = this.$refs.Qty[0].value
      
@@ -148,30 +148,31 @@ export default {
 
     
   
-     this.merch[0].inventory--
+    //  $store.state.merch[0].inventory--
 
-     if(this.merch[0].inventory === 0){
-       this.instock = false
-     }
-     if(this.numItems > 3){
-       this.merch[0].show = true
-     }
+    //  if(this.merch[0].inventory === 0){
+    //    this.instock = false
+    //  }
+    //  if(this.numItems > 3){
+    //    this.merch[0].show = true
+    //  }
    },
 
-   removeItemEvent(){
-     this.$emit('removeFromCart')
+  //  removeItemEvent(){
+
+  //    this.$emit('removeFromCart')
 
       
-    if(this.numItems > 0){
-      this.merch[0].inventory++
-    }
-       if(this.merch[0].inventory > 0){
-       this.instock = true
-     }
-    if(this.numItems < 3 ){
-       this.merch[0].show = false
-     }
-   }
+  //   if(this.numItems > 0){
+  //     this.merch[0].inventory++
+  //   }
+  //      if(this.merch[0].inventory > 0){
+  //      this.instock = true
+  //    }
+  //   if(this.numItems < 3 ){
+  //      this.merch[0].show = false
+  //    }
+  //  }
    
  }
 }

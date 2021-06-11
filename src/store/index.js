@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+
   state: {
     instock: true,
     numItems: [],
@@ -90,16 +91,22 @@ export default new Vuex.Store({
     ]
   },
   mutations: {
+
+  trackQty(state,event,index) {
+
+    state.numItems[index].amount = event.target.value
+   },
+
     updateProduct(state,index){
 
       state.merch[0].selectedVariant = index
     },
 
     addToCart(state,qtyVal){
-      state.merch[0].variants[this.merch[0].selectedVariant].howMany = qtyVal
+      state.merch[0].variants[state.merch[0].selectedVariant].howMany = qtyVal
 
      
-      if(state.merch[0].variants[this.merch[0].selectedVariant].selectedSize === ''){
+      if(state.merch[0].variants[state.merch[0].selectedVariant].selectedSize === ''){
 
         state.error = true
  
@@ -132,7 +139,7 @@ export default new Vuex.Store({
            
            color: state.merch[0].variants[state.merch[0].selectedVariant].variantColorCode,
  
-           objExits: false
+           objExists: false
          }
     }
 
@@ -144,9 +151,9 @@ export default new Vuex.Store({
 
         
 
-           one.amount = one.amount + newObject.amount
+           one.amount = one.amount + this.newObject.amount
 
-            newObject.objExits = true
+            this.newObject.objExists = true
 
            //  using the which msg property to determing the color of the background and the msg that will be used with the class error to show a msg alert. in this case, im changing the value of 'which msg ' to 1 to later say, if whichMsg is equal to 1 then the background color will be such.
 
@@ -167,9 +174,9 @@ export default new Vuex.Store({
         
       })}
 
-      if(newObject.objExits === false || state.numItems.length === 0){
+      if(this.newObject.objExists === false || state.numItems.length === 0){
 
-        state.numItems.push(newObject)
+        state.numItems.push(this.newObject)
    
                state.whichMsg = 2
    
